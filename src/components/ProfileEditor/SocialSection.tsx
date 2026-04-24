@@ -1,13 +1,9 @@
+import { useProfile } from "../../hooks/useProfile";
 import { SOCIAL_FIELDS } from "../../resources/SocialFields";
-import type { SocialLinks } from "../../types/SocialMedia";
 import { Input } from "../Fields/Input";
 
-interface SocialSectionProps {
-  socialLinks: SocialLinks;
-  setSocialLink: (key: keyof SocialLinks, value: string) => void;
-}
-
-function SocialSection({ socialLinks, setSocialLink }: SocialSectionProps) {
+function SocialSection() {
+  const { socialLinks, setSocialLink } = useProfile();
   return (
     <section className="rounded-3xl border bg-white p-6">
       <h2 className="text-lg font-semibold">Redes Sociais</h2>

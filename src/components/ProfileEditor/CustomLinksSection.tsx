@@ -1,20 +1,10 @@
-import type { CustomLink } from "../../types/Profile";
+import { useProfile } from "../../hooks/useProfile";
 import { Button } from "../Button";
 import { Input } from "../Fields/Input";
 
-interface CustomLinksSectionProps {
-  customLinks: CustomLink[];
-  addCustomLink: () => void;
-  removeCustomLink: (id: string) => void;
-  updateCustomLink: (id: string, field: "title" | "url", value: string) => void;
-}
-
-function CustomLinksSection({
-  customLinks,
-  addCustomLink,
-  removeCustomLink,
-  updateCustomLink,
-}: CustomLinksSectionProps) {
+function CustomLinksSection() {
+  const { customLinks, addCustomLink, removeCustomLink, updateCustomLink } =
+    useProfile();
   return (
     <section className="rounded-3xl border bg-white p-6">
       <h2 className="text-lg font-semibold">Links Personalizados</h2>

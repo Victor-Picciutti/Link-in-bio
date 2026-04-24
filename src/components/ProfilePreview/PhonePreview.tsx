@@ -1,24 +1,18 @@
+import { useMemo } from "react";
+import { useProfile } from "../../hooks/useProfile";
 import { SOCIAL_FIELDS } from "../../resources/SocialFields";
-import type { CustomLink } from "../../types/Profile";
-import type { SocialLinks } from "../../types/SocialMedia";
 
-interface PhonePreviewProps {
-  githubUsername: string;
-  showFollowers: boolean;
-  showRepositories: boolean;
-  socialLinks: SocialLinks;
-  customLinks: CustomLink[];
-}
-
-function PhonePreview({
-  githubUsername,
-  showFollowers,
-  showRepositories,
-  socialLinks,
-  customLinks,
-}: PhonePreviewProps) {
-  const activeSocialLinks = SOCIAL_FIELDS.filter(
-    (field) => socialLinks[field.key] !== "",
+function PhonePreview() {
+  const {
+    githubUser,
+    showFollowers,
+    showRepositories,
+    socialLinks,
+    customLinks,
+  } = useProfile();
+  const activeSocialLinks = useMemo(
+    () => SOCIAL_FIELDS.filter((field) => socialLinks[field.key] !== ""),
+    [socialLinks],
   );
 
   return (
@@ -28,24 +22,34 @@ function PhonePreview({
       <div className="mt-6 flex justify-center">
         <div className="relative w-80 rounded-3xl border-slate-900 bg-slate-950 p-2">
           <div className="min-h-96 h-140 overflow-y-auto rounded-2xl bg-white px-6 pb-6 pt-10 text-center">
-            <div className="mx-auto h-16 w-16 rounded-full bg-linear-to-br from-sky-200 via-white to-emerald-100" />
+            {githubUser ? (
+              <img
+                src={githubUser.avatar_url}
+                alt={githubUser.login}
+                className="mx-auto h-16 w-16 rounded-full object-cover"
+              />
+            ) : (
+              <div className="mx-auto h-16 w-16 rounded-full bg-linear-to-br from-sky-200 via-white to-emerald-100" />
+            )}
             <h3 className="mt-4 text-base font-semibold">
-              {githubUsername || "Seu perfil"}
+              {githubUser?.name ?? "Seu perfil"}
             </h3>
             <p className="text-xs text-slate-500">
-              {githubUsername ? `@${githubUsername}` : "@seuuser"}
+              {githubUser ? `@${githubUser.login}` : "@seuuser"}
             </p>
 
             {(showFollowers || showRepositories) && (
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 {showFollowers && (
                   <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                    seguidores
+                    {githubUser
+                      ? `${githubUser.followers.toLocaleString("pt-BR")} seguidores`
+                      : "seguidores"}
                   </span>
                 )}
                 {showRepositories && (
                   <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                    repos
+                    {githubUser ? `${githubUser.public_repos} repos` : "repos"}
                   </span>
                 )}
               </div>
