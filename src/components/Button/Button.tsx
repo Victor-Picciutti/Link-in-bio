@@ -18,6 +18,7 @@ export function Button({
   return (
     <button
       type="button"
+      role="button"
       className={buttonClassName}
       onClick={onClick}
       disabled={disabled}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useGithubUser } from "../../hooks/useGithubUser";
 import { useProfile } from "../../hooks/useProfile";
-import { Button } from "../Button";
+import { Button } from "../Button/Button";
 import { Checkbox } from "../Fields/Checkbox";
 import { Input } from "../Fields/Input";
 

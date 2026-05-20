@@ -1,5 +1,5 @@
 import { useProfile } from "../../hooks/useProfile";
-import { Button } from "../Button";
+import { Button } from "../Button/Button";
 import { Input } from "../Fields/Input";
 
 function CustomLinksSection() {
